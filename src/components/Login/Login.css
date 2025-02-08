@@ -1,0 +1,14 @@
+.login-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  width: 30rem;
+  height: 20rem;
+  background-color: #f59932;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px #c67d2a;
+}
+
+.input-area {
+}

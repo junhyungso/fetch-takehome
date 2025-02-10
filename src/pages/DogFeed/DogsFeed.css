@@ -1,0 +1,105 @@
+.page-content {
+  margin: 0 200px;
+}
+
+.description-text {
+  margin: 20px 200px 80px;
+  font-size: 1.2rem;
+}
+.dogs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.MuiPaper-root.dog-profile {
+  flex: 1 0 15%;
+  background-color: #fff6ec;
+  padding: 16px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgb(213, 213, 213);
+}
+.MuiPaper-root.dog-profile:hover {
+  transform: scale(1.05);
+}
+
+/*#fcebd8
+#fff4e8
+*/
+.MuiSvgIcon-root.favorite {
+  color: red;
+  border: none;
+}
+.MuiSvgIcon-root.not-favorite {
+  color: gray;
+  border: none;
+}
+
+.age-slider {
+  width: 300px;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dog-image-container {
+  display: flex;
+  height: 130px;
+}
+
+.dog-image {
+  margin: auto;
+  height: 120px;
+}
+
+.zip-input {
+  border-radius: 10px;
+  border: 1px solid #000;
+  height: 20px;
+  width: 250px;
+}
+
+.bottom-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px;
+  position: relative;
+}
+
+.page-buttons {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.page-button {
+  margin: 0px 10px;
+}
+
+.match-button-bottom-container {
+  margin-left: auto;
+}
+
+.match-button {
+  background-color: #300c38;
+  color: white;
+}
+.match-button:hover {
+  background-color: #fff;
+  border: 0.5px solid #300c38;
+  color: black;
+}
+
+.match-button-bottom {
+  background-color: #300c38;
+  color: white;
+}
+.match-button-bottom:hover {
+  background-color: #fff;
+  border: 0.5px solid #300c38;
+  color: black;
+}

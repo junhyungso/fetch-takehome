@@ -1,0 +1,12 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #300c38;
+  height: 100px;
+  box-shadow: 0px 5px 5px #bebebe;
+}
+
+.fetch-logo {
+  padding: 10px;
+  border-radius: 50%;
+}

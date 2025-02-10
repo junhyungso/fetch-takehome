@@ -24,14 +24,17 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
 
+select {
+  height: 40px;
+  border-radius: 10px;
+}
+
 h1 {
-  font-size: 3.2em;
+  font-size: 4.7em;
   line-height: 1.1;
 }
 
@@ -47,7 +50,8 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  background-color: #300c38;
+  color: #fff;
 }
 button:focus,
 button:focus-visible {

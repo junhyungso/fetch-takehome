@@ -1,0 +1,41 @@
+.background {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(#5c2d6b, #300c38);
+}
+.login-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+  width: 30rem;
+  height: 20rem;
+  background: #f9f7f1;
+  border-radius: 10px;
+}
+
+.logo {
+  border-radius: 50%;
+}
+
+.input-line {
+  margin: 10px 0px;
+}
+
+.input {
+  border-radius: 10px;
+  box-shadow:0 0 10px;
+  border:1px solid #eeeeee;
+  height: 30px;
+  width: 250px;
+  margin-left: 10px;
+}
+
+.login-button {
+  margin-top: 20px;
+}
+/*    background: radial-gradient(#fcebd8, #c67d2a);

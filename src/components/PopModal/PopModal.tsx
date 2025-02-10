@@ -6,7 +6,7 @@ import { Dog } from '../../pages/DogFeed/DogsFeed';
 type ModalProps = {
   openModal: boolean;
   handleClose: () => void;
-  dog: Dog;
+  dog: Dog | null;
 };
 
 const style = {
@@ -19,6 +19,8 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  borderRadius: '20px',
+  backgroundColor: '#fff6ec',
 };
 
 const PopModal = ({ openModal, handleClose, dog }: ModalProps) => {
@@ -31,19 +33,19 @@ const PopModal = ({ openModal, handleClose, dog }: ModalProps) => {
     >
       <Box sx={style}>
         <div className="dog-image-container">
-          <img src={dog.img} alt={dog.name} className="dog-image" />
+          <img src={dog?.img} alt={dog?.name} className="dog-image" />
         </div>
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          {dog.name}
+          Meet {dog?.name}!
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Breed: {dog.breed}
+          Breed: {dog?.breed}
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Age: {dog.age}
+          Age: {dog?.age}
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Zip: {dog.zip_code}
+          Zip: {dog?.zip_code}
         </Typography>
       </Box>
     </Modal>

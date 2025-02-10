@@ -1,11 +1,50 @@
 .page-content {
   margin: 0 200px;
 }
-
-.description-text {
-  margin: 20px 200px 80px;
-  font-size: 1.2rem;
+.page-banner {
+  background-image: url('../../assets/dogbanner.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 500px;
+  box-shadow: 0px 5px 5px #bebebe;
+  margin-bottom: 50px;
 }
+.page-title {
+  margin-top: 0px;
+  font-size: 4.7em;
+  line-height: 1.1;
+  padding: 40px;
+}
+.description-text {
+  background-color: rgb(255, 253, 253, 0.7);
+  box-shadow: 2px 2px 2px #bebebe;
+
+  margin: auto 200px;
+  font-size: 1.5rem;
+  color: black;
+  padding: 40px;
+}
+
+.spinner {
+  width: 50px;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #300c38;
+  --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+  mask: var(--_m);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  animation: s3 1s infinite linear;
+  margin: auto;
+}
+@keyframes s3 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
 .dogs-container {
   display: flex;
   flex-wrap: wrap;
@@ -58,16 +97,21 @@
 .zip-input {
   border-radius: 10px;
   border: 1px solid #000;
-  height: 20px;
-  width: 250px;
+  height: 25px;
+  width: 100px;
+  margin-top: 10px;
 }
 
 .bottom-buttons {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 30px;
+  margin: 30px 0px;
   position: relative;
+}
+
+.sort-buttons {
+  margin: 0px 5px;
 }
 
 .page-buttons {
@@ -87,6 +131,7 @@
 .match-button {
   background-color: #300c38;
   color: white;
+  margin-left: 5px;
 }
 .match-button:hover {
   background-color: #fff;

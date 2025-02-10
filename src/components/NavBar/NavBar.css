@@ -8,5 +8,15 @@
 
 .fetch-logo {
   padding: 10px;
+  margin-left: 10px;
   border-radius: 50%;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 5px;
+  background-color: #300c38;
+  color: #fff;
 }

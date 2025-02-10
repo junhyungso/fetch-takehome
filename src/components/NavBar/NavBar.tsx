@@ -3,9 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import FetchLogo from '../../assets/fetch-logo.png';
 import './NavBar.css';
 
-const NavBar = () => {
-  // Logout user with backend and execute logout method to remove items from local storage
-  const handleLogout = async () => {};
+type NavBarProps = {
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+};
+const NavBar = ({ setIsAuthenticated }: NavBarProps) => {
+  const handleLogout = async () => {
+    setIsAuthenticated(false);
+  };
   const navigate = useNavigate();
 
   const handleRouteHome = () => {
@@ -21,7 +25,7 @@ const NavBar = () => {
         onClick={handleRouteHome}
       />
       <nav>
-        <button onClick={handleLogout}>
+        <button className="logout" onClick={handleLogout}>
           <LogoutIcon />
           Log Out
         </button>

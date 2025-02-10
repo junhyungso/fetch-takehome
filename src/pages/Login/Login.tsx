@@ -18,27 +18,12 @@ const Login = ({ setIsAuthenticated }: LoginProps) => {
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
 
-  const validateCredentials = () => {
-    // if (
-    //   name.length >= 2 &&
-    //   email.includes('@') &&
-    //   email.includes('.') &&
-    //   email.length >= 3
-    // ) {
-    //   return true;
-    // }
-    // return false;
-    return true;
-  };
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
     handleLogin();
   };
 
   const handleLogin = async () => {
-    const isValid = validateCredentials();
-    if (!isValid) return; //TODO: show credential errors
     try {
       setLoading(true);
       const response = await axios.post(
@@ -70,7 +55,8 @@ const Login = ({ setIsAuthenticated }: LoginProps) => {
               <PersonIcon />
               <label>Name: </label>
               <input
-                className="input"
+                required
+                className="info-input"
                 placeholder="John"
                 value={name}
                 onChange={(e) => {
@@ -82,7 +68,8 @@ const Login = ({ setIsAuthenticated }: LoginProps) => {
               <EmailIcon />
               <label>Email: </label>
               <input
-                className="input"
+                required
+                className="info-input"
                 placeholder="john1234@gmail.com"
                 value={email}
                 onChange={(e) => {
@@ -100,7 +87,11 @@ const Login = ({ setIsAuthenticated }: LoginProps) => {
           </div>
         </form>
 
-        {loginError && <p>Authentication failed. Please try again.</p>}
+        {loginError && (
+          <p className="error-message">
+            Authentication failed. Please try again.
+          </p>
+        )}
       </div>
     </div>
   );

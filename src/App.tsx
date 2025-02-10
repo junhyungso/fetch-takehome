@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="app">
       {!isAuthenticated && <Login setIsAuthenticated={setIsAuthenticated} />}
-      {isAuthenticated && <DogsFeed />}
+      {isAuthenticated && <DogsFeed setIsAuthenticated={setIsAuthenticated} />}
     </div>
   );
 }

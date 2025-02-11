@@ -16,6 +16,30 @@ type Match = {
   match: string;
 };
 
+export const handleLogin = async (
+  name: string,
+  email: string,
+  setIsLoading: Dispatch<SetStateAction<boolean>>,
+  setIsAuthenticated: Dispatch<SetStateAction<boolean>>,
+  setLoginError: Dispatch<SetStateAction<string>>
+) => {
+  try {
+    setIsLoading(true);
+    const response = await axios.post(
+      `${API_BASE_URL}/auth/login`,
+      { name, email },
+      { withCredentials: true }
+    );
+    if (response.data === 'OK') {
+      setIsAuthenticated(true);
+    }
+  } catch (e: unknown) {
+    setLoginError(e as string);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 export const fetchBreeds = async (
   setBreeds: Dispatch<SetStateAction<string[]>>
 ) => {
@@ -24,8 +48,8 @@ export const fetchBreeds = async (
       withCredentials: true,
     });
     setBreeds(response.data);
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -36,7 +60,8 @@ export const fetchDogs = async (
   sortOrder: string,
   zipCodes: string[],
   setDogs: Dispatch<SetStateAction<Dog[]>>,
-  setIsLoadingDogs: Dispatch<SetStateAction<boolean>>
+  setIsLoadingDogs: Dispatch<SetStateAction<boolean>>,
+  setDogsError: Dispatch<SetStateAction<string>>
 ) => {
   try {
     setIsLoadingDogs(true);
@@ -60,7 +85,8 @@ export const fetchDogs = async (
     );
     setDogs(dogDetails.data);
   } catch (error) {
-    console.error('Error fetching dogs:', error);
+    console.log(error);
+    setDogsError('Error fetching dogs. Please try agian later.');
   } finally {
     setIsLoadingDogs(false);
   }
@@ -97,8 +123,8 @@ export const fetchLocations = async (
       );
       setZipCodes(nearbyZipCodes);
     }
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
   }
 };
 

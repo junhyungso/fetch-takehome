@@ -1,29 +1,6 @@
 .page-content {
   margin: 0 200px;
 }
-.page-banner {
-  background-image: url('../../assets/dogbanner.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 500px;
-  box-shadow: 0px 5px 5px #bebebe;
-  margin-bottom: 50px;
-}
-.page-title {
-  margin-top: 0px;
-  font-size: 4.7em;
-  line-height: 1.1;
-  padding: 40px;
-}
-.description-text {
-  background-color: rgb(255, 253, 253, 0.7);
-  box-shadow: 2px 2px 2px #bebebe;
-
-  margin: auto 200px;
-  font-size: 1.5rem;
-  color: black;
-  padding: 40px;
-}
 
 .spinner {
   width: 50px;
@@ -47,12 +24,23 @@
 
 .dogs-container {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   gap: 16px;
+  background-color: #fffdf9;
+  padding: 16px;
+}
+
+@media (max-width: 1250px) {
+  .dogs-container {
+    background-color: #fff;
+    padding: none;
+  }
 }
 
 .MuiPaper-root.dog-profile {
-  flex: 1 0 15%;
+  flex: 0 0 220px;
   background-color: #fff6ec;
   padding: 16px;
   text-align: center;
@@ -79,6 +67,14 @@
 .filters {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin: 20px 0px;
+}
+
+@media (max-width: 1250px) {
+  .filters {
+    flex-direction: column;
+  }
 }
 
 .dog-image-container {
@@ -98,6 +94,22 @@
   width: 100px;
   margin-top: 10px;
 }
+.top-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sort-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.sort-button {
+  margin: 0px 5px;
+}
 
 .bottom-buttons {
   display: flex;
@@ -107,14 +119,25 @@
   position: relative;
 }
 
-.sort-buttons {
-  margin: 0px 5px;
+@media (max-width: 1250px) {
+  .bottom-buttons {
+    justify-content: center;
+    flex-direction: column;
+  }
 }
-
 .page-buttons {
+  display: flex;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+}
+
+@media (max-width: 1250px) {
+  .page-buttons {
+    position: relative;
+    left: 0;
+    transform: none;
+  }
 }
 
 .page-button {
@@ -125,11 +148,21 @@
   margin-left: auto;
 }
 
+@media (max-width: 1250px) {
+  .match-button-bottom-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
 .match-button {
   background-color: #300c38;
   color: white;
   margin-left: 5px;
 }
+
 .match-button:hover {
   background-color: #fff;
   border: 0.5px solid #300c38;
@@ -139,6 +172,14 @@
 .match-button-bottom {
   background-color: #300c38;
   color: white;
+}
+
+@media (max-width: 860px) {
+  .match-button-bottom {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
 }
 .match-button-bottom:hover {
   background-color: #fff;

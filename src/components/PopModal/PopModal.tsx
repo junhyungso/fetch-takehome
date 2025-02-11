@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
-import { Dog } from '../../pages/DogFeed/DogsFeed';
+import { Dog } from '../../types/types';
 
 type ModalProps = {
   openModal: boolean;

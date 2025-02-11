@@ -6,6 +6,7 @@ import './NavBar.css';
 type NavBarProps = {
   setIsAuthenticated: (isAuthenticated: boolean) => void;
 };
+
 const NavBar = ({ setIsAuthenticated }: NavBarProps) => {
   const handleLogout = async () => {
     setIsAuthenticated(false);

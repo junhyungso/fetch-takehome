@@ -1,16 +1,13 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-import {
-  ArrowDropDown,
-  KeyboardArrowDown,
-  KeyboardArrowUp,
-  Pets,
-} from '@mui/icons-material';
+import { KeyboardArrowDown, KeyboardArrowUp, Pets } from '@mui/icons-material';
 import { Slider } from '@mui/material';
 
+import Banner from '../../components/Banner/Banner';
 import DogCard from '../../components/DogCard/DogCard';
 import NavBar from '../../components/NavBar/NavBar';
 import PopModal from '../../components/PopModal/PopModal';
+import { Dog } from '../../types/types';
 import {
   fetchBreeds,
   fetchDogs,
@@ -23,27 +20,23 @@ type DogFeedProps = {
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
 };
 
-export type Dog = {
-  id: string;
-  img: string;
-  name: string;
-  age: number;
-  zip_code: string;
-  breed: string;
-};
-
 const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
   const [breeds, setBreeds] = useState<string[]>([]);
+
   const [selectedBreed, setSelectedBreed] = useState('');
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [isLoadingDogs, setIsLoadingDogs] = useState(false);
+  const [dogsError, setDogsError] = useState('');
+
   const [favorites, setFavorites] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [sortOrder, setSortOrder] = useState('breed:asc');
   const [ageRange, setAgeRange] = useState([0, 14]);
+
   const [isFindMatch, setIsFindMatch] = useState(false);
   const [isLoadingMatch, setIsLoadingMatch] = useState(false);
   const [matchError, setMatchError] = useState('');
+
   const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
   const [clickedDog, setClickedDog] = useState<Dog | null>(null);
   const [openModal, setOpenModal] = useState(false);
@@ -82,7 +75,10 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
     }
   };
 
-  const handleOpenModal = () => setOpenModal(true);
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
   const handleCloseModal = () => {
     setIsFindMatch(false);
     setOpenModal(false);
@@ -114,7 +110,7 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
 
   const handleZipInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      setEnteredZipCode(e.target.value);
+      setEnteredZipCode((e.target as HTMLInputElement).value);
     }
   };
 
@@ -151,31 +147,15 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
       sortOrder,
       zipCodes,
       setDogs,
-      setIsLoadingDogs
+      setIsLoadingDogs,
+      setDogsError
     );
   }, [ageRange, currentPage, selectedBreed, sortOrder, zipCodes]);
 
   return (
     <>
       <NavBar setIsAuthenticated={setIsAuthenticated} />
-      <div className="page-banner">
-        <div className="page-title">Fetch the Perfect Dog for You!</div>
-        <div className="description-text">
-          Browse through all our beautiful dogs available for adoption at your
-          leisure and choose the perfect one that meets your match. You can
-          filter the search by their breed, location, and age. If you are not
-          sure on how to choose the best type for you, click the heart icon on
-          all the dogs you like and we will find the perfect match for you with
-          our very own algorithm!
-          <div>
-            Help our dogs find a new, lovely home so that they can receive the
-            love and warmth they need!
-          </div>
-        </div>
-        <div>
-          <ArrowDropDown fontSize="large" sx={{ margin: '20px 0px;' }} />
-        </div>
-      </div>
+      <Banner />
       <div className="page-content">
         <div className="filters">
           <div>
@@ -214,21 +194,24 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
               max={14}
             />
           </div>
-          <div>
-            <button className="sort-buttons" onClick={handleSortDogsByBreed}>
-              Sort by Breed
-              {arrowIconPosition}
-            </button>
-            <button className="sort-buttons" onClick={handleSortDogsByName}>
-              Sort by Name
-              {arrowIconPosition}
-            </button>
+          <div className="top-buttons">
+            <div className="sort-buttons">
+              <button onClick={handleSortDogsByBreed} className="sort-button">
+                Sort by Breed
+                {arrowIconPosition}
+              </button>
+              <button onClick={handleSortDogsByName} className="sort-button">
+                Sort by Name
+                {arrowIconPosition}
+              </button>
+            </div>
             <button className="match-button" onClick={handleGenerateMatch}>
               {matchButtonContent}
             </button>
           </div>
         </div>
         <div className="dogs-container">
+          {dogsError && <div>{dogsError}</div>}
           {isLoadingDogs && <div className="spinner"></div>}
           {!isLoadingDogs &&
             dogs.map((dog) => (

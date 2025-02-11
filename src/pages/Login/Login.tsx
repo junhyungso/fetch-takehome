@@ -1,12 +1,10 @@
 import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon from '@mui/icons-material/Person';
 
-import axios from 'axios';
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import fetchLogo from '../../assets/fetch-logo.png';
+import { handleLogin } from '../../utils/api';
 import './Login.css';
-
-const API_BASE_URL = 'https://frontend-take-home-service.fetch.com';
 
 type LoginProps = {
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
@@ -20,25 +18,7 @@ const Login = ({ setIsAuthenticated }: LoginProps) => {
 
   const handleFormSubmit = (e: FormEvent<EventTarget>) => {
     e.preventDefault();
-    handleLogin();
-  };
-
-  const handleLogin = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.post(
-        `${API_BASE_URL}/auth/login`,
-        { name, email },
-        { withCredentials: true }
-      );
-      if (response.data === 'OK') {
-        setIsAuthenticated(true);
-      }
-    } catch (e: unknown) {
-      setLoginError(e as string);
-    } finally {
-      setIsLoading(false);
-    }
+    handleLogin(name, email, setIsLoading, setIsAuthenticated, setLoginError);
   };
 
   return (
@@ -80,7 +60,7 @@ const Login = ({ setIsAuthenticated }: LoginProps) => {
               <input type="checkbox" />
               Remember me
             </div>
-            <button className="login-button" onClick={handleLogin}>
+            <button className="login-button" onClick={handleFormSubmit}>
               {isLoading ? 'Loading...' : 'Login'}
             </button>
           </div>

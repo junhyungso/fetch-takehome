@@ -6,7 +6,7 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import { Dog } from '../../pages/DogFeed/DogsFeed';
+import { Dog } from '../../types/types';
 
 type DogCardProps = {
   dog: Dog;

@@ -115,7 +115,7 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
       <NavBar setIsAuthenticated={setIsAuthenticated} />
       <Banner />
       <div className="page-content">
-        <Filters
+        <Filters // Filters component will allow users to filter dogs by breed, age, and location.
           breeds={breeds}
           selectedBreed={selectedBreed}
           setSelectedBreed={setSelectedBreed}
@@ -169,7 +169,7 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
           </div>
         </div>
       </div>
-      <PopModal
+      <PopModal // When user wants to find a match, PopModal will display the matched dog.
         openModal={openModal}
         handleClose={handleCloseModal}
         dog={isFindMatch ? matchedDog : clickedDog}

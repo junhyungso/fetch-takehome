@@ -1,0 +1,52 @@
+.age-slider {
+  width: 300px;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0px;
+}
+
+@media (max-width: 1250px) {
+  .filters {
+    flex-direction: column;
+  }
+}
+
+.zip-input {
+  border-radius: 10px;
+  border: 1px solid #000;
+  height: 25px;
+  width: 100px;
+  margin-top: 10px;
+}
+.top-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sort-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.sort-button {
+  margin: 0px 5px;
+}
+
+.match-button {
+  background-color: #300c38;
+  color: white;
+  margin-left: 5px;
+}
+
+.match-button:hover {
+  background-color: #fff;
+  border: 0.5px solid #300c38;
+  color: black;
+}

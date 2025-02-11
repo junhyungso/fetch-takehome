@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-import { KeyboardArrowDown, KeyboardArrowUp, Pets } from '@mui/icons-material';
-import { Slider } from '@mui/material';
+import { Pets } from '@mui/icons-material';
 
 import Banner from '../../components/Banner/Banner';
 import DogCard from '../../components/DogCard/DogCard';
+import Filters from '../../components/Filters/Filters';
 import NavBar from '../../components/NavBar/NavBar';
 import PopModal from '../../components/PopModal/PopModal';
 import { Dog } from '../../types/types';
@@ -51,30 +51,6 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
     );
   };
 
-  const handleSortDogsByBreed = () => {
-    if (
-      sortOrder === 'breed:asc' ||
-      sortOrder === 'name:asc' ||
-      sortOrder === 'name:desc'
-    ) {
-      setSortOrder('breed:desc');
-    } else {
-      setSortOrder('breed:asc');
-    }
-  };
-
-  const handleSortDogsByName = () => {
-    if (
-      sortOrder === 'name:asc' ||
-      sortOrder === 'breed:asc' ||
-      sortOrder === 'breed:desc'
-    ) {
-      setSortOrder('name:desc');
-    } else {
-      setSortOrder('name:asc');
-    }
-  };
-
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -99,19 +75,9 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
     handleOpenModal();
   };
 
-  const handleAgeRangeChange = (e: Event, newValue: number | number[]) => {
-    setAgeRange(newValue as number[]);
-  };
-
   const handleDogCardClicked = (dog: Dog) => {
     setClickedDog(dog);
     setOpenModal(true);
-  };
-
-  const handleZipInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      setEnteredZipCode((e.target as HTMLInputElement).value);
-    }
   };
 
   const matchButtonContent = isLoadingMatch ? (
@@ -122,22 +88,13 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
     </>
   );
 
-  const arrowIconPosition =
-    sortOrder === 'breed:asc' ||
-    sortOrder === 'name:asc' ||
-    sortOrder === 'name:desc' ? (
-      <KeyboardArrowDown sx={{ position: 'relative', top: '5px' }} />
-    ) : (
-      <KeyboardArrowUp sx={{ position: 'relative', top: '5px' }} />
-    );
+  useEffect(() => {
+    fetchBreeds(setBreeds);
+  }, []);
 
   useEffect(() => {
     fetchLocations(enteredZipCode, setZipCodes);
   }, [enteredZipCode]);
-
-  useEffect(() => {
-    fetchBreeds(setBreeds);
-  }, []);
 
   useEffect(() => {
     fetchDogs(
@@ -157,59 +114,18 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
       <NavBar setIsAuthenticated={setIsAuthenticated} />
       <Banner />
       <div className="page-content">
-        <div className="filters">
-          <div>
-            <label>Filters: </label>
-            <select
-              onChange={(e) => setSelectedBreed(e.target.value)}
-              value={selectedBreed}
-            >
-              <option value="">All Breeds</option>
-              {breeds.map((breed) => (
-                <option key={breed} value={breed}>
-                  {breed}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label>Zip: </label>
-            <input
-              className="zip-input"
-              placeholder="10001"
-              onKeyDown={handleZipInput}
-            />
-          </div>
-          <div className="age-slider">
-            <label>
-              Age Range: {ageRange[0]} - {ageRange[1]}
-            </label>
-            <Slider
-              sx={{ color: '#300c38' }}
-              getAriaLabel={() => 'Temperature range'}
-              value={ageRange}
-              onChange={handleAgeRangeChange}
-              valueLabelDisplay="auto"
-              min={0}
-              max={14}
-            />
-          </div>
-          <div className="top-buttons">
-            <div className="sort-buttons">
-              <button onClick={handleSortDogsByBreed} className="sort-button">
-                Sort by Breed
-                {arrowIconPosition}
-              </button>
-              <button onClick={handleSortDogsByName} className="sort-button">
-                Sort by Name
-                {arrowIconPosition}
-              </button>
-            </div>
-            <button className="match-button" onClick={handleGenerateMatch}>
-              {matchButtonContent}
-            </button>
-          </div>
-        </div>
+        <Filters
+          breeds={breeds}
+          selectedBreed={selectedBreed}
+          setSelectedBreed={setSelectedBreed}
+          setEnteredZipCode={setEnteredZipCode}
+          ageRange={ageRange}
+          setAgeRange={setAgeRange}
+          sortOrder={sortOrder}
+          setSortOrder={setSortOrder}
+          handleGenerateMatch={handleGenerateMatch}
+          matchButtonContent={matchButtonContent}
+        />
         <div className="dogs-container">
           {dogsError && <div>{dogsError}</div>}
           {isLoadingDogs && <div className="spinner"></div>}

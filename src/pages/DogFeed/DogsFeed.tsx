@@ -1,52 +1,39 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+
+import {
+  ArrowDropDown,
+  KeyboardArrowDown,
+  KeyboardArrowUp,
+  Pets,
+} from '@mui/icons-material';
+import { Slider } from '@mui/material';
+
+import DogCard from '../../components/DogCard/DogCard';
 import NavBar from '../../components/NavBar/NavBar';
+import PopModal from '../../components/PopModal/PopModal';
+import {
+  fetchBreeds,
+  fetchDogs,
+  fetchLocations,
+  generateMatch,
+} from '../../utils/api';
 import './DogsFeed.css';
 
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import Slider from '@mui/material/Slider';
-
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { CardActions } from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import IconButton from '@mui/material/IconButton';
-
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import PetsIcon from '@mui/icons-material/Pets';
-import Typography from '@mui/material/Typography';
-import PopModal from '../../components/PopModal/PopModal';
-
-interface Location {
-  zip_code: string;
-  latitude: number;
-  longitude: number;
-  city: string;
-  state: string;
-  county: string;
-}
-
 type DogFeedProps = {
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
+  setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
 };
-export interface Dog {
+
+export type Dog = {
   id: string;
   img: string;
   name: string;
   age: number;
   zip_code: string;
   breed: string;
-}
-
-interface Match {
-  match: string;
-}
-
-const API_BASE_URL = 'https://frontend-take-home-service.fetch.com';
+};
 
 const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
-  const [breeds, setBreeds] = useState([]);
+  const [breeds, setBreeds] = useState<string[]>([]);
   const [selectedBreed, setSelectedBreed] = useState('');
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [isLoadingDogs, setIsLoadingDogs] = useState(false);
@@ -61,54 +48,7 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
   const [clickedDog, setClickedDog] = useState<Dog | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const [enteredZipCode, setEnteredZipCode] = useState<string>('');
-
   const [zipCodes, setZipCodes] = useState<string[]>([]);
-
-  useEffect(() => {
-    const fetchBreeds = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/dogs/breeds`, {
-          withCredentials: true,
-        });
-        setBreeds(response.data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchBreeds();
-  }, []);
-
-  useEffect(() => {
-    const fetchDogs = async () => {
-      try {
-        setIsLoadingDogs(true);
-        const response = await axios.get(`${API_BASE_URL}/dogs/search`, {
-          params: {
-            breeds: selectedBreed ? [selectedBreed] : [],
-            size: 25,
-            zipCodes: zipCodes.length > 0 ? zipCodes : [],
-            from: currentPage * 25,
-            ageMin: ageRange[0],
-            ageMax: ageRange[1],
-            sort: sortOrder,
-          },
-          withCredentials: true,
-        });
-
-        const dogDetails = await axios.post(
-          `${API_BASE_URL}/dogs`,
-          response.data.resultIds,
-          { withCredentials: true }
-        );
-        setDogs(dogDetails.data);
-      } catch (error) {
-        console.error('Error fetching dogs:', error);
-      } finally {
-        setIsLoadingDogs(false);
-      }
-    };
-    fetchDogs();
-  }, [ageRange, currentPage, selectedBreed, sortOrder, zipCodes]);
 
   const handleFavorite = (dog: Dog) => {
     setFavorites((prevFavorites: string[]) =>
@@ -141,29 +81,6 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
       setSortOrder('name:asc');
     }
   };
-  const generateMatch = async () => {
-    try {
-      setIsLoadingMatch(true);
-      const response = await axios.post(
-        `${API_BASE_URL}/dogs/match`,
-        favorites,
-        { withCredentials: true }
-      );
-
-      const matchedId: Match = response.data.match;
-
-      const matchResponse = await axios.post(
-        `${API_BASE_URL}/dogs/`,
-        [matchedId],
-        { withCredentials: true }
-      );
-      setMatchedDog(matchResponse.data[0]);
-    } catch (error) {
-      setMatchError(error as string);
-    } finally {
-      setIsLoadingMatch(false);
-    }
-  };
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => {
@@ -176,12 +93,17 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
       alert('Like at least one dog to match!');
       return;
     }
-    await generateMatch();
+    await generateMatch(
+      favorites,
+      setIsLoadingMatch,
+      setMatchedDog,
+      setMatchError
+    );
     setIsFindMatch(true);
     handleOpenModal();
   };
 
-  const handleAgeRangeChange = (event: Event, newValue: number | number[]) => {
+  const handleAgeRangeChange = (e: Event, newValue: number | number[]) => {
     setAgeRange(newValue as number[]);
   };
 
@@ -190,48 +112,48 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
     setOpenModal(true);
   };
 
-  useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const response = await axios.post(
-          `${API_BASE_URL}/locations`,
-          [enteredZipCode],
-          {
-            withCredentials: true,
-          }
-        );
-
-        if (response.data[0] === null) {
-          setZipCodes([]);
-        } else {
-          const searchResponse = await axios.post(
-            `${API_BASE_URL}/locations/search`,
-            {
-              states: [response.data[0].state],
-              size: 100,
-            },
-            {
-              withCredentials: true,
-            }
-          );
-          const nearbyZipCodes = searchResponse.data.results.map(
-            (location: Location) => location.zip_code
-          );
-          console.log(nearbyZipCodes);
-          setZipCodes(nearbyZipCodes);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchLocations();
-  }, [enteredZipCode]);
-
-  const handleZipInput = (e) => {
+  const handleZipInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       setEnteredZipCode(e.target.value);
     }
   };
+
+  const matchButtonContent = isLoadingMatch ? (
+    'Loading...'
+  ) : (
+    <>
+      Find My Match <Pets sx={{ position: 'relative', top: '4px' }} />
+    </>
+  );
+
+  const arrowIconPosition =
+    sortOrder === 'breed:asc' ||
+    sortOrder === 'name:asc' ||
+    sortOrder === 'name:desc' ? (
+      <KeyboardArrowDown sx={{ position: 'relative', top: '5px' }} />
+    ) : (
+      <KeyboardArrowUp sx={{ position: 'relative', top: '5px' }} />
+    );
+
+  useEffect(() => {
+    fetchLocations(enteredZipCode, setZipCodes);
+  }, [enteredZipCode]);
+
+  useEffect(() => {
+    fetchBreeds(setBreeds);
+  }, []);
+
+  useEffect(() => {
+    fetchDogs(
+      ageRange,
+      currentPage,
+      selectedBreed,
+      sortOrder,
+      zipCodes,
+      setDogs,
+      setIsLoadingDogs
+    );
+  }, [ageRange, currentPage, selectedBreed, sortOrder, zipCodes]);
 
   return (
     <>
@@ -251,7 +173,7 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
           </div>
         </div>
         <div>
-          <ArrowDropDownIcon fontSize="large" sx={{ margin: '20px 0px;' }} />
+          <ArrowDropDown fontSize="large" sx={{ margin: '20px 0px;' }} />
         </div>
       </div>
       <div className="page-content">
@@ -295,41 +217,14 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
           <div>
             <button className="sort-buttons" onClick={handleSortDogsByBreed}>
               Sort by Breed
-              {sortOrder === 'breed:asc' ||
-              sortOrder === 'name:asc' ||
-              sortOrder === 'name:desc' ? (
-                <KeyboardArrowDownIcon
-                  sx={{ position: 'relative', top: '5px' }}
-                />
-              ) : (
-                <KeyboardArrowUpIcon
-                  sx={{ position: 'relative', top: '5px' }}
-                />
-              )}
+              {arrowIconPosition}
             </button>
             <button className="sort-buttons" onClick={handleSortDogsByName}>
               Sort by Name
-              {sortOrder === 'name:asc' ||
-              sortOrder === 'breed:asc' ||
-              sortOrder === 'breed:desc' ? (
-                <KeyboardArrowDownIcon
-                  sx={{ position: 'relative', top: '5px' }}
-                />
-              ) : (
-                <KeyboardArrowUpIcon
-                  sx={{ position: 'relative', top: '5px' }}
-                />
-              )}
+              {arrowIconPosition}
             </button>
             <button className="match-button" onClick={handleGenerateMatch}>
-              {isLoadingMatch ? (
-                'Loading...'
-              ) : (
-                <>
-                  Find My Match{' '}
-                  <PetsIcon sx={{ position: 'relative', top: '4px' }} />
-                </>
-              )}
+              {matchButtonContent}
             </button>
           </div>
         </div>
@@ -337,32 +232,13 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
           {isLoadingDogs && <div className="spinner"></div>}
           {!isLoadingDogs &&
             dogs.map((dog) => (
-              <Card variant="outlined" className="dog-profile" key={dog.id}>
-                <CardContent
-                  onClick={() => handleDogCardClicked(dog)}
-                  sx={{ cursor: 'pointer' }}
-                >
-                  <div className="dog-image-container">
-                    <img src={dog.img} alt={dog.name} className="dog-image" />
-                  </div>
-                  <Typography variant="h5" component="div">
-                    {dog.name}
-                  </Typography>
-                  <Typography variant="body2">{dog.breed}</Typography>
-                  <Typography variant="body2">Age: {dog.age}</Typography>
-                  <Typography variant="body2">Zip: {dog.zip_code}</Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteBorderIcon
-                      onClick={() => handleFavorite(dog)}
-                      className={
-                        favorites.includes(dog.id) ? 'favorite' : 'not-favorite'
-                      }
-                    />
-                  </IconButton>
-                </CardActions>
-              </Card>
+              <DogCard
+                key={dog.id}
+                dog={dog}
+                favorites={favorites}
+                handleDogCardClicked={handleDogCardClicked}
+                handleFavorite={handleFavorite}
+              />
             ))}
         </div>
         <div className="bottom-buttons">
@@ -386,14 +262,7 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
               className="match-button-bottom"
               onClick={handleGenerateMatch}
             >
-              {isLoadingMatch ? (
-                'Loading...'
-              ) : (
-                <>
-                  Find My Match{' '}
-                  <PetsIcon sx={{ position: 'relative', top: '4px' }} />
-                </>
-              )}
+              {matchButtonContent}
             </button>
             {matchError && <p>{matchError}</p>}
           </div>

@@ -2,7 +2,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon from '@mui/icons-material/Person';
 
 import axios from 'axios';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import fetchLogo from '../../assets/fetch-logo.png';
 import './Login.css';
 
@@ -15,17 +15,17 @@ type LoginProps = {
 const Login = ({ setIsAuthenticated }: LoginProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = (e: FormEvent<EventTarget>) => {
     e.preventDefault();
     handleLogin();
   };
 
   const handleLogin = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       const response = await axios.post(
         `${API_BASE_URL}/auth/login`,
         { name, email },
@@ -35,10 +35,9 @@ const Login = ({ setIsAuthenticated }: LoginProps) => {
         setIsAuthenticated(true);
       }
     } catch (e: unknown) {
-      const errorMessage = e.message;
-      setLoginError(errorMessage);
+      setLoginError(e as string);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -79,14 +78,13 @@ const Login = ({ setIsAuthenticated }: LoginProps) => {
             </div>
             <div>
               <input type="checkbox" />
-              remember me
+              Remember me
             </div>
             <button className="login-button" onClick={handleLogin}>
-              Login
+              {isLoading ? 'Loading...' : 'Login'}
             </button>
           </div>
         </form>
-
         {loginError && (
           <p className="error-message">
             Authentication failed. Please try again.

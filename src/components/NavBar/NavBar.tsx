@@ -1,5 +1,4 @@
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useNavigate } from 'react-router-dom';
 import FetchLogo from '../../assets/fetch-logo.png';
 import './NavBar.css';
 
@@ -11,11 +10,7 @@ const NavBar = ({ setIsAuthenticated }: NavBarProps) => {
   const handleLogout = async () => {
     setIsAuthenticated(false);
   };
-  const navigate = useNavigate();
 
-  const handleRouteHome = () => {
-    navigate('/');
-  };
   return (
     <div className="navbar">
       <img
@@ -23,7 +18,6 @@ const NavBar = ({ setIsAuthenticated }: NavBarProps) => {
         alt="fetch-logo"
         width={200}
         className="fetch-logo"
-        onClick={handleRouteHome}
       />
       <nav>
         <button className="logout" onClick={handleLogout}>

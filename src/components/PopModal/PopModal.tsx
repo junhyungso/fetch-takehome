@@ -35,7 +35,12 @@ const PopModal = ({ openModal, handleClose, dog }: ModalProps) => {
         <div className="dog-image-container">
           <img src={dog?.img} alt={dog?.name} className="dog-image" />
         </div>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
+        <Typography
+          id="modal-modal-title"
+          variant="h6"
+          component="h2"
+          sx={{ mt: 2 }}
+        >
           Meet {dog?.name}!
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>

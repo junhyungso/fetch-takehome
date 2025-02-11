@@ -41,6 +41,7 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
   const [clickedDog, setClickedDog] = useState<Dog | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const [enteredZipCode, setEnteredZipCode] = useState<string>('');
+  const [locationError, setLocationError] = useState<string>('');
   const [zipCodes, setZipCodes] = useState<string[]>([]);
 
   const handleFavorite = (dog: Dog) => {
@@ -93,7 +94,7 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
   }, []);
 
   useEffect(() => {
-    fetchLocations(enteredZipCode, setZipCodes);
+    fetchLocations(enteredZipCode, setZipCodes, setLocationError);
   }, [enteredZipCode]);
 
   useEffect(() => {
@@ -128,6 +129,7 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
         />
         <div className="dogs-container">
           {dogsError && <div>{dogsError}</div>}
+          {locationError && <div>{locationError}</div>}
           {isLoadingDogs && <div className="spinner"></div>}
           {!isLoadingDogs &&
             dogs.map((dog) => (

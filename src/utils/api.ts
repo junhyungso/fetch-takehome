@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Dispatch, SetStateAction } from 'react';
-import { Dog } from '../pages/DogFeed/DogsFeed';
-const API_BASE_URL = 'https://frontend-take-home-service.fetch.com';
+import { Dog } from '../types/types';
+
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 type Location = {
   zip_code: string;
@@ -26,7 +27,7 @@ export const handleLogin = async (
   try {
     setIsLoading(true);
     const response = await axios.post(
-      `${API_BASE_URL}/auth/login`,
+      `${BASE_URL}/auth/login`,
       { name, email },
       { withCredentials: true }
     );
@@ -44,7 +45,7 @@ export const fetchBreeds = async (
   setBreeds: Dispatch<SetStateAction<string[]>>
 ) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/dogs/breeds`, {
+    const response = await axios.get(`${BASE_URL}/dogs/breeds`, {
       withCredentials: true,
     });
     setBreeds(response.data);
@@ -65,7 +66,7 @@ export const fetchDogs = async (
 ) => {
   try {
     setIsLoadingDogs(true);
-    const response = await axios.get(`${API_BASE_URL}/dogs/search`, {
+    const response = await axios.get(`${BASE_URL}/dogs/search`, {
       params: {
         breeds: selectedBreed ? [selectedBreed] : [],
         size: 25,
@@ -79,7 +80,7 @@ export const fetchDogs = async (
     });
 
     const dogDetails = await axios.post(
-      `${API_BASE_URL}/dogs`,
+      `${BASE_URL}/dogs`,
       response.data.resultIds,
       { withCredentials: true }
     );
@@ -94,11 +95,12 @@ export const fetchDogs = async (
 
 export const fetchLocations = async (
   enteredZipCode: string,
-  setZipCodes: Dispatch<SetStateAction<string[]>>
+  setZipCodes: Dispatch<SetStateAction<string[]>>,
+  setLocationError: Dispatch<SetStateAction<string>>
 ) => {
   try {
     const response = await axios.post(
-      `${API_BASE_URL}/locations`,
+      `${BASE_URL}/locations`,
       [enteredZipCode],
       {
         withCredentials: true,
@@ -108,23 +110,28 @@ export const fetchLocations = async (
     if (response.data[0] === null) {
       setZipCodes([]);
     } else {
-      const searchResponse = await axios.post(
-        `${API_BASE_URL}/locations/search`,
-        {
-          states: [response.data[0].state],
-          size: 100,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      const nearbyZipCodes = searchResponse.data.results.map(
-        (location: Location) => location.zip_code
-      );
-      setZipCodes(nearbyZipCodes);
+      try {
+        const searchResponse = await axios.post(
+          `${BASE_URL}/locations/search`,
+          {
+            states: [response.data[0].state],
+            size: 100,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        const nearbyZipCodes = searchResponse.data.results.map(
+          (location: Location) => location.zip_code
+        );
+        setZipCodes(nearbyZipCodes);
+      } catch (error) {
+        console.log(error);
+      }
     }
   } catch (error) {
     console.log(error);
+    setLocationError('Error fetching locations. Please try again later.');
   }
 };
 
@@ -136,17 +143,15 @@ export const generateMatch = async (
 ) => {
   try {
     setIsLoadingMatch(true);
-    const response = await axios.post(`${API_BASE_URL}/dogs/match`, favorites, {
+    const response = await axios.post(`${BASE_URL}/dogs/match`, favorites, {
       withCredentials: true,
     });
 
     const matchedId: Match = response.data.match;
 
-    const matchResponse = await axios.post(
-      `${API_BASE_URL}/dogs/`,
-      [matchedId],
-      { withCredentials: true }
-    );
+    const matchResponse = await axios.post(`${BASE_URL}/dogs/`, [matchedId], {
+      withCredentials: true,
+    });
     setMatchedDog(matchResponse.data[0]);
   } catch (error) {
     setMatchError(error as string);

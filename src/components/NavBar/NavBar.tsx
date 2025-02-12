@@ -1,5 +1,6 @@
 import LogoutIcon from '@mui/icons-material/Logout';
 import FetchLogo from '../../assets/fetch-logo.png';
+import { handleLogout } from '../../utils/api';
 import './NavBar.css';
 
 type NavBarProps = {
@@ -7,8 +8,9 @@ type NavBarProps = {
 };
 
 const NavBar = ({ setIsAuthenticated }: NavBarProps) => {
-  const handleLogout = async () => {
+  const handleLogoutClicked = async () => {
     setIsAuthenticated(false);
+    handleLogout();
   };
 
   return (
@@ -20,7 +22,7 @@ const NavBar = ({ setIsAuthenticated }: NavBarProps) => {
         className="fetch-logo"
       />
       <nav>
-        <button className="logout" onClick={handleLogout}>
+        <button className="logout" onClick={handleLogoutClicked}>
           <LogoutIcon sx={{ marginRight: '4px' }} />
           Log Out
         </button>

@@ -159,3 +159,11 @@ export const generateMatch = async (
     setIsLoadingMatch(false);
   }
 };
+
+export const handleLogout = async () => {
+  try {
+    await axios.post(`${BASE_URL}/auth/logout`, { withCredentials: true });
+  } catch (error: unknown) {
+    console.log(error);
+  }
+};

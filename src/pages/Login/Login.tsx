@@ -28,7 +28,7 @@ const Login = ({
     e.preventDefault();
     handleLogin(name, email, setIsLoading, setIsAuthenticated, setLoginError);
 
-    const expirationTime = new Date().getTime() + 3600000; // 1 hour from now
+    const expirationTime = new Date().getTime() + 3600000; //expire time 1 hour from now
     localStorage.setItem('auth', expirationTime.toString());
   };
 

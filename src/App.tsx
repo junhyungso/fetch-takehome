@@ -17,6 +17,7 @@ function App() {
     }
 
     const interval = setInterval(() => {
+      //check if token expired every minute
       if (new Date().getTime() > parseInt(expirationTime)) {
         setIsAuthenticated(false);
         handleLogout(name, email);

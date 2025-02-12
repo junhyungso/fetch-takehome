@@ -56,10 +56,6 @@ const Login = ({ setIsAuthenticated }: LoginProps) => {
                 }}
               />
             </div>
-            <div>
-              <input type="checkbox" />
-              Remember me
-            </div>
             <button className="login-button" onClick={handleFormSubmit}>
               {isLoading ? 'Loading...' : 'Login'}
             </button>

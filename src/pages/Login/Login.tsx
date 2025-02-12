@@ -31,7 +31,9 @@ const Login = ({ setIsAuthenticated }: LoginProps) => {
         <form onSubmit={handleFormSubmit}>
           <div className="input-area">
             <div className="input-line">
-              <PersonIcon />
+              <PersonIcon
+                style={{ verticalAlign: 'middle', marginRight: '4px' }}
+              />
               <label>Name: </label>
               <input
                 required
@@ -44,8 +46,11 @@ const Login = ({ setIsAuthenticated }: LoginProps) => {
               />
             </div>
             <div className="input-line">
-              <EmailIcon />
+              <EmailIcon
+                style={{ verticalAlign: 'middle', marginRight: '4px' }}
+              />
               <label>Email: </label>
+
               <input
                 required
                 className="info-input"

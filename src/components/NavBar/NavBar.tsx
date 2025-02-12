@@ -21,7 +21,7 @@ const NavBar = ({ setIsAuthenticated }: NavBarProps) => {
       />
       <nav>
         <button className="logout" onClick={handleLogout}>
-          <LogoutIcon />
+          <LogoutIcon sx={{ marginRight: '4px' }} />
           Log Out
         </button>
       </nav>

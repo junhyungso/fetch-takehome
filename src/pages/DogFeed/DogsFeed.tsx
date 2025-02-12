@@ -85,7 +85,8 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
     'Loading...'
   ) : (
     <>
-      Find My Match <Pets sx={{ position: 'relative', top: '4px' }} />
+      Find My Match{' '}
+      <Pets sx={{ position: 'relative', verticalAlign: 'middle' }} />
     </>
   );
 

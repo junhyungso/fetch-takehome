@@ -33,15 +33,19 @@ const Filters = ({
 }: FilterProps) => {
   const BreedArrowIconPosition =
     sortOrder === 'breed:desc' ? (
-      <KeyboardArrowUp sx={{ position: 'relative', top: '5px' }} />
+      <KeyboardArrowUp sx={{ position: 'relative', verticalAlign: 'middle' }} />
     ) : (
-      <KeyboardArrowDown sx={{ position: 'relative', top: '5px' }} />
+      <KeyboardArrowDown
+        sx={{ position: 'relative', verticalAlign: 'middle' }}
+      />
     );
   const NameArrowIconPosition =
     sortOrder === 'name:desc' ? (
-      <KeyboardArrowUp sx={{ position: 'relative', top: '5px' }} />
+      <KeyboardArrowUp sx={{ position: 'relative', verticalAlign: 'middle' }} />
     ) : (
-      <KeyboardArrowDown sx={{ position: 'relative', top: '5px' }} />
+      <KeyboardArrowDown
+        sx={{ position: 'relative', verticalAlign: 'middle' }}
+      />
     );
 
   return (

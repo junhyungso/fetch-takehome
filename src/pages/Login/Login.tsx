@@ -7,12 +7,20 @@ import { handleLogin } from '../../utils/api';
 import './Login.css';
 
 type LoginProps = {
+  name: string;
+  setName: Dispatch<SetStateAction<string>>;
+  email: string;
+  setEmail: Dispatch<SetStateAction<string>>;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
 };
 
-const Login = ({ setIsAuthenticated }: LoginProps) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+const Login = ({
+  name,
+  setName,
+  email,
+  setEmail,
+  setIsAuthenticated,
+}: LoginProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
 

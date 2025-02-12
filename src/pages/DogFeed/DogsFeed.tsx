@@ -17,10 +17,12 @@ import {
 import './DogsFeed.css';
 
 type DogFeedProps = {
+  name: string;
+  email: string;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
 };
 
-const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
+const DogsFeed = ({ name, email, setIsAuthenticated }: DogFeedProps) => {
   const [breeds, setBreeds] = useState<string[]>([]);
 
   const [selectedBreed, setSelectedBreed] = useState('');
@@ -113,7 +115,11 @@ const DogsFeed = ({ setIsAuthenticated }: DogFeedProps) => {
 
   return (
     <>
-      <NavBar setIsAuthenticated={setIsAuthenticated} />
+      <NavBar
+        name={name}
+        email={email}
+        setIsAuthenticated={setIsAuthenticated}
+      />
       <Banner />
       <div className="page-content">
         <Filters // Filters component will allow users to filter dogs by breed, age, and location.

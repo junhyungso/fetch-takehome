@@ -160,9 +160,13 @@ export const generateMatch = async (
   }
 };
 
-export const handleLogout = async () => {
+export const handleLogout = async (name: string, email: string) => {
   try {
-    await axios.post(`${BASE_URL}/auth/logout`, { withCredentials: true });
+    await axios.post(
+      `${BASE_URL}/auth/logout`,
+      { name, email },
+      { withCredentials: true }
+    );
   } catch (error: unknown) {
     console.log(error);
   }

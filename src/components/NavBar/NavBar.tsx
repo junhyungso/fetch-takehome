@@ -4,13 +4,15 @@ import { handleLogout } from '../../utils/api';
 import './NavBar.css';
 
 type NavBarProps = {
+  name: string;
+  email: string;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
 };
 
-const NavBar = ({ setIsAuthenticated }: NavBarProps) => {
+const NavBar = ({ name, email, setIsAuthenticated }: NavBarProps) => {
   const handleLogoutClicked = async () => {
     setIsAuthenticated(false);
-    handleLogout();
+    handleLogout(name, email);
   };
 
   return (

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Dispatch, SetStateAction } from 'react';
 import { Dog } from '../types/types';
 
-const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 type Location = {
   zip_code: string;

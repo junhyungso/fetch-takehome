@@ -18,3 +18,5 @@ You can visit the project with this [LINK](https://junhyungso.github.io/fetch-ta
 ![image](https://github.com/user-attachments/assets/3eb053fe-af17-4b12-82cd-3e1bb27a4f9d)
 ![image](https://github.com/user-attachments/assets/f55d4280-5581-4f26-bb7d-34032fd62167)
 ![image](https://github.com/user-attachments/assets/5276a3be-5e8f-4cd8-beb2-ad1507dc016f)
+
+Created with Vite + React + TypeScript + MaterialUI

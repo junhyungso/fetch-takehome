@@ -23,7 +23,8 @@ function App() {
         handleLogout(name, email);
         localStorage.removeItem('auth');
       }
-    }, 6000);
+    }, 60000);
+
     return () => clearInterval(interval);
   }, [name, email, expirationTime]);
 

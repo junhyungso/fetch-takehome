@@ -87,7 +87,7 @@ export const fetchDogs = async (
     setDogs(dogDetails.data);
   } catch (error) {
     console.log(error);
-    setDogsError('Error fetching dogs. Please try agian later.');
+    setDogsError('Error fetching dogs. Please try again later.');
   } finally {
     setIsLoadingDogs(false);
   }

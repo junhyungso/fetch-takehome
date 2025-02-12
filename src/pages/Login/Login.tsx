@@ -27,7 +27,7 @@ const Login = ({ setIsAuthenticated }: LoginProps) => {
         <div>
           <img src={fetchLogo} alt="fetchlogo" width={100} className="logo" />
         </div>
-        <h2>Fetch Your Dog</h2>
+        <h1 className="login-heading">Fetch Your Dog!</h1>
         <form onSubmit={handleFormSubmit}>
           <div className="input-area">
             <div className="input-line">

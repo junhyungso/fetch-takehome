@@ -13,6 +13,7 @@ const NavBar = ({ name, email, setIsAuthenticated }: NavBarProps) => {
   const handleLogoutClicked = async () => {
     setIsAuthenticated(false);
     handleLogout(name, email);
+    localStorage.removeItem('auth');
   };
 
   return (

@@ -27,6 +27,9 @@ const Login = ({
   const handleFormSubmit = (e: FormEvent<EventTarget>) => {
     e.preventDefault();
     handleLogin(name, email, setIsLoading, setIsAuthenticated, setLoginError);
+
+    const expirationTime = new Date().getTime() + 3600000; // 1 hour from now
+    localStorage.setItem('auth', expirationTime.toString());
   };
 
   return (

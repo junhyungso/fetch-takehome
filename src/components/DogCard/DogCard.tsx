@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Dog } from '../../types/types';
+import './DogCard.css';
 
 type DogCardProps = {
   dog: Dog;

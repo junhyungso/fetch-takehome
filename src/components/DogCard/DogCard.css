@@ -1,0 +1,33 @@
+.MuiPaper-root.dog-profile {
+  flex: 0 0 240px;
+  background-color: #fff6ec;
+  padding: 16px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgb(213, 213, 213);
+}
+
+.MuiPaper-root.dog-profile:hover {
+  transform: scale(1.05);
+}
+
+.MuiSvgIcon-root.favorite {
+  color: red;
+  border: none;
+}
+
+.MuiSvgIcon-root.not-favorite {
+  color: gray;
+  border: none;
+}
+
+.dog-image-container {
+  display: flex;
+  height: 130px;
+}
+
+.dog-image {
+  margin: auto;
+  height: 120px;
+  width: 100%;
+}

@@ -2,7 +2,8 @@
 
 Browse through the list of all orphaned dogs in the country and find the perfect match for you based on your preferences and location.
 Use the filters to filter for the dog of your choice or 'heart' the dogs you like and click 'Find Match' to be suggested the perfect dog for you.
-You can visit the project with this [LINK](https://junhyungso.github.io/fetch-takehome/)
+
+You can visit the project with this [LINK](https://junhyungso.github.io/fetch-takehome/).
 
 # Running the Site Locally
 

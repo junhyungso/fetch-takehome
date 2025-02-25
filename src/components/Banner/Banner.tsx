@@ -1,11 +1,11 @@
 import { ArrowDropDown } from '@mui/icons-material';
-import './Banner.css';
+import styles from './Banner.module.css';
 
 const Banner = () => {
   return (
-    <div className="page-banner">
-      <div className="page-title">Fetch the Perfect Dog for You!</div>
-      <div className="description-text">
+    <div className={styles.pageBanner}>
+      <div className={styles.pageTitle}>Fetch the Perfect Dog for You!</div>
+      <div className={styles.descriptionText}>
         Browse through all our beautiful dogs available for adoption at your
         leisure and choose the perfect one that meets your match. You can filter
         the search by their breed, location, and age. If you are not sure on how
